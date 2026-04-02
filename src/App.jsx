@@ -12,7 +12,7 @@ const App = () => {
 
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename="/student-tracker">
         <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>}/>
