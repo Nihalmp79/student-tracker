@@ -1,22 +1,9 @@
 import React from 'react'
-import { useEffect, useState }  from 'react'
+import useFetch from '../hooks/useFetch'
 
 
 const Home = () => {
-    const [quote, setQuote] = useState("");
-
-    useEffect(() => {
-        const fetchQuote = async () => {
-            try{
-                const response = await fetch("https://dummyjson.com/quotes/random");
-                const data = await response.json();
-                setQuote(data.quote);
-            } catch {
-                setQuote("Education is the most powerful weapon which you can use to change the world. - Nelson Mandela");
-            }
-        }
-        fetchQuote();
-    },[]);
+   const {data, loading, error} = useFetch("https://dummyjson.com/quotes/random")
   return (
     <div className='min-h-screen bg-gray-50'>
         <div className='max-w-4xl mx-auto px-6 py-12'>
@@ -26,9 +13,11 @@ const Home = () => {
             <p className='text-gray-500 text-lg mb-8'>
                 Track your students progress in one place
             </p>
-             {quote && (
+            {loading && <p className='text-gray-400'>Loading...</p>}
+            {error && <p className='text-red-500'>{error}</p>}
+             {data && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-            <p className="text-blue-800 italic text-lg">"{quote}"</p>
+            <p className="text-blue-800 italic text-lg">"{data.quote}"</p>
           </div>
         )}
         </div>
